@@ -1,0 +1,99 @@
+
+@{
+    ViewData["Title"] = "DangCongThuc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<ThucPham> list = ViewBag.ThucPhams as List<ThucPham>;
+    List<ChiTietCongThucNauAn> listSelected = ViewBag.ListSelected as List<ChiTietCongThucNauAn>;
+
+}
+<main id="main" role="main">
+  <section data-section-id="account" data-section-type="account">
+    <div class="container container--flush">
+      <div class="layout">
+        <!--list tác vụ-->
+        <div class="layout__section layout__section--secondary">
+          <div class="card card--sticky hidden-pocket">
+            <div class="card__section card__section--tight">
+
+              <div class="card__linklist">
+                <a href="@Url.Action("Index","Account")" class="card__linklist-item link ">Thông tin cá nhân</a>
+                <a href="@Url.Action("Invoice","Account")" class="card__linklist-item link ">Đơn hàng của tôi </a>
+                <a href="@Url.Action("FollowedFood","Account")" class="card__linklist-item link">Thực phẩm đã theo dõi</a>
+                <a href="@Url.Action("DangCongThuc","Account")" class="card__linklist-item link text--strong">Đăng công thức nấu ăn</a>
+                <a href="@Url.Action("KhoBep","Account")" class="card__linklist-item link">Kho bếp của tôi</a>
+                <a href="#" class="card__linklist-item link" data-no-instant="" onclick="logOutTK()">Đăng xuất</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--layout tác vụ -->
+        <div class="layout__section">
+          <div class="card">
+            <div class="card__section card__section--tight">
+              <h1 class="heading h1"> Đăng công thức nấu ăn </h1>
+            </div>
+            <div class="card__section">
+                <form method="post" action="~/Account/DangCongThuc" id="address_form_new" accept-charset="UTF-8" class="form">
+                    <div class="form__input-wrapper form__input-wrapper--labelled">
+                        <label for="address-newname]" class="form__floating-label">Tên công thức</label>
+                        <input id="address-new[name]" type="text" class="form__field form__field--text " name="tenCT" value="@ViewBag.tenCT" autofocus="">
+
+                    </div>
+
+                    <div class="form__input-wrapper form__input-wrapper--labelled">
+                        <label for="address-new[phone]" class="form__floating-label">Link hình ảnh</label>
+                        <input id="address-new[phone]" type="text" class="form__field form__field--text " name="linkHA" value="@ViewBag.linkHA">
+
+                    </div>
+
+                    <div class="form__input-wrapper form__input-wrapper--labelled">
+                        <label for="address-new[address1]" class="form__floating-label">Link video</label>
+                        <input id="address-new[address1]" type="text" class="form__field form__field--text " name="linkVD" value="@ViewBag.linkVD">
+
+                    </div>
+
+                    <div class="form__input-wrapper form__input-wrapper--labelled">
+                        <label for="address-new[address1]" class="form__floating-label">Mô tả</label>
+                        <input id="address-new[address1]" type="text" class="form__field form__field--text " name="moTa" value="@ViewBag.moTa">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Các thực phẩm thuộc công thức</label>
+                        <div>
+                            <div class="row">
+                                
+
+                                @foreach (var item in list)
+                                {
+                                    if (listSelected.FirstOrDefault(p => p.IdFood == item.IdFood) != null)
+                                    {
+                            <div class="col-md-12 form__input-wrapper form__input-wrapper--labelled">
+                                <label class="form__floating-label" for="@item.IdFood"> @item.NameFood </label>
+                                <br />
+                                <input type="number" class="form__field form__field--text " style="width:191px" name="@item.IdFood" value="@listSelected.FirstOrDefault(p => p.IdFood == item.IdFood).SoLuong" /> <span> @item.DonViTinh</span>
+
+                            </div> }
+                                            else
+                                            {
+                            <div class="col-md-12 form__input-wrapper form__input-wrapper--labelled ">
+                                <label class="form__floating-label" for="@item.IdFood"> @item.NameFood </label>
+                                <br />
+                                <input type="number" class="form__field form__field--text " style="width:191px" name="@item.IdFood" value="0" /><span> @item.DonViTinh</span>
+                            </div>}
+                                    
+                                        }
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <p class="text-danger">@ViewBag.Error</p>
+                    <button class="form__submit button button--primary button--full" type="submit">Đăng công thức</button>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

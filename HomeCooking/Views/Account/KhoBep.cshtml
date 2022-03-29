@@ -1,0 +1,159 @@
+@model IEnumerable<HomeCooking.Models.ChiTietKhoBep>;
+@{
+    ViewData["Title"] = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="main" role="main">
+    <section data-section-id="account" data-section-type="account">
+        <div class="container container--flush">
+            <div class="layout">
+                <!--list tác vụ-->
+                <div class="layout__section layout__section--secondary">
+                    <div class="card card--sticky hidden-pocket">
+                        <div class="card__section card__section--tight">
+
+                          <div class="card__linklist">
+                            <a href="@Url.Action("Index","Account")" class="card__linklist-item link">Thông tin cá nhân</a>
+                            <a href="@Url.Action("Invoice","Account")" class="card__linklist-item link">Đơn hàng của tôi </a>
+                            <a href="@Url.Action("FollowedFood","Account")" class="card__linklist-item link">Thực phẩm đã theo dõi</a>
+                            <a href="@Url.Action("DangCongThuc","Account")" class="card__linklist-item link">Đăng công thức nấu ăn</a>
+                            <a href="@Url.Action("KhoBep","Account")" class="card__linklist-item link text--strong">Kho bếp của tôi</a>
+                            <a href="#" class="card__linklist-item link" data-no-instant="" onclick="logOutTK()">Đăng xuất</a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!--layout tác vụ -->
+                <div class="layout__section">
+                    <div class="card">
+                        <div class="card__section card__section--tight">
+                            <h1 class="heading h1">Kho bếp online </h1>
+                        </div>
+                        <div class="card__section">
+                           <table class="line-item-table table table--loose">
+                            <thead class="hidden-phone" style="">
+                                <tr>
+                                    <th>
+                                        Tên thực phẩm
+                                    </th>
+
+                                    <th class="table__cell--center">
+                                      Ngày sản xuất
+                                    </th>
+                                    <th  class="table__cell--center">
+                                      Ngày hết hạn
+                                    </th>
+                                    <th  class="table__cell--center">
+                                        Số lượng hiện tại/Đơn vị tính
+                                    </th>
+                                    <th  class="table__cell--center">
+                                        Trạng thái
+                                    </th>
+                                    <th class="table__cell--center">
+                                        Thao tác
+                                    </th>
+                                </tr>
+                              </thead>
+                            <tbody>
+                              @foreach (var item in Model)
+                              {
+                            <tr>
+                              <td>
+                                <a href="@Url.Action("Index","Food", new { id = item.IdInvoiceNavigation.ChiTietHoaDonKhachHangs.FirstOrDefault(p => p.IdLoHang == item.IdLoHang).IdLoHangNavigation.IdFoodNavigation.IdFood })">
+                                  @Html.DisplayFor(modelItem => item.IdInvoiceNavigation.ChiTietHoaDonKhachHangs.FirstOrDefault(p => p.IdLoHang == item.IdLoHang).IdLoHangNavigation.IdFoodNavigation.NameFood)
+
+                                </a>
+                              </td>
+                              <td class="line-item__line-price table__cell--center hidden-phone">
+                                @Html.DisplayFor(modelItem => item.IdInvoiceNavigation.ChiTietHoaDonKhachHangs.FirstOrDefault(p => p.IdLoHang == item.IdLoHang).IdLoHangNavigation.NgaySanXuat)
+                              </td>
+                              <td class="line-item__line-price table__cell--center hidden-phone">
+                                @Html.DisplayFor(modelItem => item.IdInvoiceNavigation.ChiTietHoaDonKhachHangs.FirstOrDefault(p => p.IdLoHang == item.IdLoHang).IdLoHangNavigation.NgayHetHan)
+                              </td>
+                              <td class="line-item__line-price table__cell--center hidden-phone">
+                                @Html.DisplayFor(modelItem => item.SoLuongTrongChiTietHoDonKhachHang)   @Html.DisplayFor(modelItem => item.IdInvoiceNavigation.ChiTietHoaDonKhachHangs.FirstOrDefault(p => p.IdLoHang == item.IdLoHang).IdLoHangNavigation.IdFoodNavigation.DonViTinh)
+                              </td>
+                              <td class="line-item__line-price table__cell--center hidden-phone">
+                                @if (item.Status != "Đã hỏng")
+                                {
+                            <span>Còn hạn</span> }
+                                    else
+                                    {
+                            <span style="color:red;">Hết hạn</span>}
+
+                              </td>
+
+                              <td class="line-item__line-price table__cell--right hidden-phone">
+                                <button class="product-form__add-button button button--primary" onclick="XacNhanXoaTP(this.getAttribute('address-href'));" address-href="@Url.Action("DeleteKhoBep","Account", new { IdKhoBep = item.IdKhoBep, IdInvoice = item.IdInvoice, IdLoHang = item.IdLoHang })">Xóa thực phẩm</button>
+                                <script>
+                                  function XacNhanXoaTP(diachihref) {
+                                    if (confirm("Bạn chắc chắn muốn xóa thực phẩm này ra khỏi kho bếp ?")) {
+                                      location.href = "https://" + location.host + diachihref;
+                                    }
+                                  }
+                                </script>
+                              </td>
+                            </tr>}
+                            </tbody>
+                            </table>
+                        </div>
+                        <div class="card__section card__section--tight">
+                            <h1 class="heading h1">Các món ăn gợi ý phù hợp với các nguyên liệu hiện tại </h1>
+                        </div>
+                        <div class="card__section">
+                          <table class="line-item-table table table--loose">
+                            <thead class="hidden-phone" style="">
+                              <tr>
+                                <th>
+                                Hình ảnh
+                                </th>
+                                <th>
+                                  Tên công thức
+                                </th>
+                                <th class="table__cell--center">
+                                  Mô tả món ăn
+                                </th>
+                                <th  class="table__cell--right">
+                                  Thao tác
+                                </th>
+                              </tr>
+                            <tbody>
+                              @foreach (CongThucNauAn item in ViewBag.ListAvailable)
+                              {
+                              <tr class="line-item line-item--stack">
+                                
+                                <td class="line-item__product-info">
+                                  <div class="line-item__product-info-wrapper">
+                                    <div class="line-item__image-wrapper">
+                                      <div class="aspect-ratio" style="padding-bottom: 100.0%">
+                                      
+                                          <img src="@item.LinkHinhAnh" />
+     
+                                      </div>
+                                    </div>
+                                    
+                                  </div>                                          
+</td>
+                                <td>
+                                    <div class="line-item__meta">
+                                        <a href="#" class="line-item__title link text--strong">@item.TenCongThuc</a>
+                                    </div>
+                                </td>
+
+                                <td class="line-item__line-price table__cell--center hidden-phone">
+                                  @item.MoTaMonAn
+                                </td>
+                                <td class="line-item__line-price table__cell--right hidden-phone">
+                                  <a href="@Url.Action("Index","ChiTietCongThucNauAn", new { id = item.IdCongThuc })">Xem chi tiết</a>
+                                </td>
+                              </tr>
+}
+                            </tbody>
+                          </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

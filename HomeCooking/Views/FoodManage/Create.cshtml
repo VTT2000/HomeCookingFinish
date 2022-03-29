@@ -1,0 +1,154 @@
+﻿@model HomeCooking.Models.ThucPham
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/admin/_AdminLayout.cshtml";
+}
+
+
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Title</h3>
+                        <!-- Navbar -->
+                        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                            <!-- Left navbar links -->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                                </li>
+
+                            </ul>
+
+                            <!-- Right navbar links -->
+                            <ul class="navbar-nav ml-auto">
+                                <!-- Navbar Search -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+                                    <div class="navbar-search-block">
+                                        <form class="form-inline">
+                                            <div class="input-group input-group-sm">
+                                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-navbar" type="submit">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        </nav>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin-left: 320px;">
+
+                        <h1>Tạo mới</h1>
+
+                        <h4>Thực phẩm</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="Create">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="NameFood" class="control-label">Tên thực phẩm</label>
+                                        <input asp-for="NameFood" class="form-control" />
+                                        <span asp-validation-for="NameFood" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="SoLuong" class="control-label">Số lượng trên một sản phẩm</label>
+                                        <input asp-for="SoLuong" class="form-control" />
+                                        <span asp-validation-for="SoLuong" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DonViTinh" class="control-label">Đơn vị tính</label>
+                                        <input asp-for="DonViTinh" class="form-control" />
+                                        <span asp-validation-for="DonViTinh" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="PurchasePrice" class="control-label">Giá mua</label>
+                                        <input asp-for="PurchasePrice" class="form-control" />
+                                        <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Price" class="control-label">Giá bán</label>
+                                        <input asp-for="Price" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IdNsx" class="control-label">Nhà sản xuất</label>
+                                        <select asp-for="IdNsx" class="form-control" asp-items="@ViewBag.NSXs"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Status" class="control-label">Trạng thái</label>
+                                        <input asp-for="Status" class="form-control" />
+                                        <span asp-validation-for="Status" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IdLoai" class="control-label">Loại thực phẩm</label>
+                                        <select asp-for="IdLoai" class="form-control" asp-items="@ViewBag.LoaiThucPhams"></select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="LinkHinhAnh" class="control-label">Link hình ảnh</label>
+                                        <input asp-for="LinkHinhAnh" class="form-control" />
+                                        <span asp-validation-for="LinkHinhAnh" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Tạo thực phẩm" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a asp-action="Index">Trở về danh sách</a>
+                        </div>
+
+                        @section Scripts {
+                            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+                        }
+
+
+
+                    </div>
+
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+

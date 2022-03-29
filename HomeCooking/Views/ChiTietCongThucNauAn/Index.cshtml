@@ -1,0 +1,232 @@
+@model HomeCooking.Models.CongThucNauAn
+@{ ViewBag.Title = "Chi tiết món ăn";
+                Layout = "_Layout";
+                List<CongThucNauAn> list0 = ViewBag.CongThucNauAns as List<CongThucNauAn>;
+                List<ChiTietCongThucNauAn> list1 = ViewBag.ChiTietCongThucNauAns as List<ChiTietCongThucNauAn>;
+                List<ThucPham> list2 = ViewBag.ThucPhams as List<ThucPham>;
+
+                List<GioHang> listGHthieu = ViewBag.ListGHThieu as List<GioHang>;
+                List<GioHang> listGHtrongBep = ViewBag.ListNLBepCoSan as List<GioHang>; }
+
+
+<!-- body-->
+<main id="main" role="main">
+    <!-- list sản phẩm-->
+    <div id="shopify-section-item" class="shopify-section">
+        <section class="section" data-section-id="" data-section-type="featured-collection">
+          <div class="container">
+            <header class="page__header page__header--stack" style="margin-left: 300px;">
+              <h1 class="page__title heading h1">Công thức nấu món "@Model.TenCongThuc</h1><div class="page__meta">
+                <span class="page__meta-item page__meta-item--author">Đăng bởi @Model.TacGia </span><br /><time class="page__meta-item page__meta-item--date"> Ngày đăng @Model.NgayTao</time>
+              </div>
+            </header>
+            <div class="blog-container">
+              <div id="shopify-section-article-template" class="shopify-section shopify-section__article">
+                <article data-section-id="article-template" data-section-type="blog-post">
+                  <div class="article__inner">
+                    <div class="article__content rte article-content bigpen-body-content">
+                      <div style="text-align: start;">
+                        <img src="@Model.LinkHinhAnh" alt="" style="float: none;">
+                      </div>
+                      <h2 id="toctoc-0">Nguyên liệu</h2>
+
+                      @foreach (var i in list1)
+                      {
+                        var showa = list2.FirstOrDefault(p => p.IdFood == i.IdFood);
+                        if (showa != null)
+                        {
+                <p>
+                  @showa.NameFood :
+                  @i.SoLuong
+                  @showa.DonViTinh
+                </p>}
+            }
+                      <h2 id="toctoc-1">Cách nấu</h2>
+                      <p>
+                        @Model.MoTaMonAn
+                      <p>
+                        <h2 id="toctoc-2">Video</h2>
+                        <div style="text-align: start;">
+                          <iframe width="560" height="315" src="@Model.LinkVideo" title="YouTube video player"
+                                  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+
+                    <div class="">
+                      @using Microsoft.AspNetCore.Http
+                      @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                      @if (!String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("KhachHangIdKH")))
+                      {
+                @if (String.IsNullOrEmpty(HttpContextAccessor.HttpContext.Session.GetString("NauAnIdCongThuc")))
+                {
+          <h2 id="toctoc-3">Nấu ăn bằng nguyên liệu</h2>
+                    <div class="product-form__payment-container">
+                      <button data-link-href-1="@Url.Action("NauAnVoiCongThuc", "ChiTietCongThucNauAn", new { id = Model.IdCongThuc })" data-link-href-2="@Url.Action("AddThucPhamThieuVaoGH", "ChiTietCongThucNauAn", new { id = Model.IdCongThuc })" onclick="OnlyKhoBep(this.getAttribute('data-link-href-1'),this.getAttribute('data-link-href-2'));" class="product-form__add-button button button--primary">Chỉ nguyên liệu kho bếp</button>
+
+                      <button data-link-href="@Url.Action("NauAnVoiCongThuc", "ChiTietCongThucNauAn", new { id = Model.IdCongThuc })" onclick="InAndOutKB(this.getAttribute('data-link-href'));" class="shopify-payment-button__button shopify-payment-button__button--unbranded _2ogcW-Q9I-rgsSkNbRiJzA _2EiMjnumZ6FVtlC7RViKtj _2-dUletcCZ2ZL1aaH0GXxT" data-action="add-to-cart">Nguyên liệu bên ngoài và kho bếp</button>
+
+                      <input hidden id="listGHthieu" value="@listGHtrongBep.Count" />
+                      <input hidden id="listGHthieu0" value="@listGHthieu.Count" />
+
+                      <script>
+                        function InAndOutKB(link) {
+                          if (confirm("Nấu ăn với nguyên liệu bên ngoài sẵn có và cả kho bếp online. Xác nhận tiến hành nấu ăn ?")) {
+                            location.href = link;
+                          }
+                          else {
+                            // chang lam gi
+                          }
+                        }
+                        function OnlyKhoBep(link1, link2) {
+                          var a = document.getElementById('listGHthieu');
+                          if (parseInt(a.value, 0) == 0) {
+                            if (confirm("Kho bếp online đủ nguyên liệu nấu ăn. Xác nhận tiến hành nấu ăn ?")) {
+                              location.href = link1;
+                            }
+                            else {
+                              // chang lam gi
+                            }
+                          }
+                          else {
+                            var f = document.getElementById('listGHthieu0');
+                            if (parseInt(f.value, 0) == 0) {
+                              alert("Hãy mua các nguyên liệu đã cho vào giỏ hàng");
+                            }
+                            else {
+                              alert("Hãy mua các nguyên liệu đang thiếu bên dưới cho vào giỏ hàng");
+                            }
+                            //if (confirm("Thiếu nguyên liệu nấu ăn. Bổ sung các nguyên liệu cần thiết vào giỏ hàng ?")) {
+                            //    location.href = link2;
+                            //}
+                            //else {
+                            //    // chang lam gi
+                            //}
+                          }
+                        }
+                      </script>
+                    </div>
+                              <div class="">
+                                @*hien danh sach thieu*@
+                                @if (listGHtrongBep.Count != 0)
+                                {
+
+                      @if (listGHthieu.Count != 0)
+                      {
+          <p>
+            <h2>Nguyên liệu thiếu</h2>
+          </p>
+                        <div class="product-form__payment-container">
+                          <div class="table-wrapper">
+                            <table class="line-item-table table table--loose">
+                              <thead class="hidden-phone">
+                                <tr>
+                                  <th>Sản phẩm</th>
+                                  <th class="table__cell--center">Số lượng</th>
+                                  <th class="table__cell--center">Số lượng cần mua</th>
+                                  <th class="table__cell--right">Thao tác</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @using Microsoft.AspNetCore.Http.Extensions;
+                                @foreach (GioHang item in listGHthieu)
+                                {
+                  <tr class="line-item line-item--stack">
+                    <td class="line-item__product-info">
+                      <div class="line-item__product-info-wrapper">
+                        <div class="line-item__image-wrapper">
+                          <div class="aspect-ratio" style="padding-bottom: 100.0%">
+                            <img src="@item.zLinkHinhAnh" alt="">
+                          </div>
+                        </div>
+                        <div class="line-item__meta">
+                          <!--có gì thêm tí link sản phẩm-->     <a href="" class="line-item__title link text--strong">@item.zNameFood</a><div class="line-item__price-list">
+
+                            <span class="line-item__price">@item.zDonGia₫</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="line-item__line-price table__cell--right hidden-phone"><span> @list2.FirstOrDefault(p => p.IdFood == item.zIdFood).SoLuong</span> @list2.FirstOrDefault(p => p.IdFood == item.zIdFood).DonViTinh</td>
+                    <td class="line-item__line-price table__cell--right hidden-phone"><span> @item.zSoLuong</span>
+                    <td class="line-item__line-price table__cell--right hidden-phone"> <a href="@Url.Action("ThemGioHang", "GioHang", new { IdFood = item.zIdFood, strURL = Context.Request.GetDisplayUrl(), soLuong = item.zSoLuong })">Thêm vào giỏ hàng</a>
+                  </tr>
+}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+
+                                      <div>
+                                        <a role="button" class="product-form__add-button button button--primary" href="@Url.Action("AddThucPhamThieuVaoGH","ChiTietCongThucNauAn", new { id = Model.IdCongThuc })">Thêm tất cả vào giỏ hàng và chuyển hướng sang giỏ hàng</a>
+                                      </div>}}
+
+                              </div> }
+                            else
+                            {
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("NauAnIdCongThuc") == Model.IdCongThuc)
+                    {
+                      // dang nau
+          <h2 id="toctoc-4">
+            Trạng thái nấu ăn
+          </h2>
+                      <div class="product-form__payment-container">
+                        <button data-link-href="@Url.Action("NauXong","ChiTietCongThucNauAn", new { id = Model.IdCongThuc })" onclick="nauXong(this.getAttribute('data-link-href'));" class="product-form__add-button button button--primary" aria-busy="false">
+                          <span class="btn__content">Nấu xong</span>
+                        </button>
+                        <button data-link-href="@Url.Action("HuyBoNauAn","ChiTietCongThucNauAn", new { id = Model.IdCongThuc })" onclick="huyBoNauAn(this.getAttribute('data-link-href'));" class="step__footer__continue-btn btn btn-danger" aria-busy="false">
+                          <span class="btn__content">Hủy bỏ</span>
+                        </button>
+                        <script>
+                          function nauXong(link) {
+                            if (confirm("Bạn xác nhận đã nấu xong ? (Tự động trừ các nguyên liệu trong kho bếp online)")) {
+                              location.href = link;
+                            }
+                            else {
+                              // chang lam gi
+                            }
+                          }
+
+                          function huyBoNauAn(link) {
+                            if (confirm("Xác nhận hủy bỏ món đang nấu ? (Các nguyên liệu sẽ không bị trừ)")) {
+                              location.href = link;
+                            }
+                            else {
+                              // chang lam gi
+                            }
+                          }
+                        </script>
+                      </div> }
+                                else
+                                {
+                      <div class="section">
+                        <div class="section__header">
+                          <h2 class="section__title">
+                            Nấu ăn bằng nguyên liệu
+                          </h2>
+                        </div>
+                        <div class="section__content">
+                          <div class="content-box">
+                            <div class="content-box__row">
+                              <div class="radio-wrapper">
+                                <span class="btn__content">Không thể chọn nguyên liệu vì bạn đang nấu món ăn khác là @HttpContextAccessor.HttpContext.Session.GetString("NauAnNameCongThuc") </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>}}}
+
+                    </div>
+
+
+                  </div>
+                </article>
+              </div>
+            </div>           
+          </div>
+
+        </section>
+    </div>
+</main>
+
+

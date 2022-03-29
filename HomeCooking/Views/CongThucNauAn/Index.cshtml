@@ -1,0 +1,110 @@
+@model IEnumerable<HomeCooking.Models.CongThucNauAn>
+@{
+    ViewBag.Title = "Món Ăn";
+    Layout = "_Layout";
+    List<CongThucNauAn> list0 = ViewBag.CongThucNauAns as List<CongThucNauAn>;
+    List<ChiTietChuDeCongThuc> list1 = ViewBag.ChiTietChuDeCongThucs as List<ChiTietChuDeCongThuc>;
+    List<ChuDeCongThuc> list2 = ViewBag.ChuDeCongThucs as List<ChuDeCongThuc>;
+}
+
+  <main id="main" role="main">
+    <div id="shopify-section-collection-template" class="shopify-section">
+      <section data-section-id="collection-template" data-section-type="collection">
+        <div class="container container--flush">
+          <div class="page__sub-header">
+            <nav aria-label="Điều hướng" class="breadcrumb">
+              <ol class="breadcrumb__list" role="list">
+                <li class="breadcrumb__item">
+                  <a class="breadcrumb__link link" href="/">Trang chủ</a><svg focusable="false" class="icon icon--arrow-right" viewBox="0 0 8 12" role="presentation">
+                    <path stroke="currentColor" stroke-width="2" d="M2 2l4 4-4 4" fill="none" stroke-linecap="square"></path>
+                  </svg>
+                </li>
+                <li class="breadcrumb__item"><span class="breadcrumb__link" aria-current="page">Công thức</span></li>
+              </ol>
+            </nav>
+          </div>
+          <div class="layout">
+            <div class="layout__section layout__section--secondary hidden-pocket">
+              <div class="card">
+                <div class="card__section card__section--tight">
+                  <p class="card__title--small heading">Chủ đề công thức</p>
+                  <div class="collection__filter-group">
+                    <ul class="collection__filter-checkbox-list" role="list">
+                      @foreach (var i in list2)
+                      {
+                        <li class="collection__filter-checkbox">
+                          <a href="@Url.Action("Index", "CongThucNauAn", new { id = i.IdChuDe })" title="  @i.TenChuDe"> @i.TenChuDe</a>
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="layout__section">
+              <div class="collection">
+                <div class="card ">
+
+                  <div class="collection__dynamic-part">
+                    <header class="card__header card__header--tight">
+                      <div class="collection__header ">
+                        <div class="collection__header-inner">
+                          <div class="collection__description ">
+                            <div class="rte" id="bigpen">
+                              Tất cả công thức
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </header>
+                    <div class="collection__toolbar collection__toolbar--bordered">
+                      <div class="collection__toolbar-item collection__toolbar-item--sort">
+                        <div class="value-picker-wrapper">
+                          <!-- nút ấn đễ sắp xếp theo ngày đăng-->
+                          <button class="value-picker-button" type="button">
+                            <span>Sắp xếp</span>
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="product-list product-list--collection product-list--with-sidebar">
+
+                      @foreach (var item in Model.ToList())
+                      {
+                        <div class="product-item product-item--vertical  1/3--tablet-and-up 1/4--desk">
+                          <a href="@Url.Action("Index", "ChiTietCongThucNauAn", new { id = item.IdCongThuc })" class="product-item__image-wrapper product-item__image-wrapper--with-secondary">
+                            <div class="aspect-ratio " style="height:230px; width:230px; padding-bottom: 100.0%">
+                              <img class="product-item__primary-image image--fade-in lazyautosizes lazyloaded" src="@item.LinkHinhAnh" />
+
+                            </div>
+                          </a>
+                          <div class="product-item__info">
+                            <div class="product-item__info-inner">
+                              <a href="@Url.Action("Index", "ChiTietCongThucNauAn", new { id = item.IdCongThuc })" class="product-item__title text--strong link">@item.TenCongThuc</a>
+                              <div class="product-item__price-list price-list">
+                                <span class="price" style="font-size:12px">
+                                  <span>Người đăng: @item.TacGia</span><!--chỗ này dể ng đăng như admin hay user-->
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>}
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</section>
+   </div>
+
+
+  </main>
+
+

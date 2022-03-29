@@ -1,0 +1,84 @@
+@model IEnumerable<HomeCooking.Models.TheoDoiThucPham>
+@{
+    ViewData["Title"] = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="main" role="main">
+    <section data-section-id="account" data-section-type="account">
+        <div class="container container--flush">
+            <div class="layout">
+                <!--list tác vụ-->
+                <div class="layout__section layout__section--secondary">
+                    <div class="card card--sticky hidden-pocket">
+                        <div class="card__section card__section--tight">
+
+                            <div class="card__linklist">
+                                <a href="@Url.Action("Index","Account")" class="card__linklist-item link ">Thông tin cá nhân</a>
+                                <a href="@Url.Action("Invoice","Account")" class="card__linklist-item link ">Đơn hàng của tôi </a>
+                                <a href="@Url.Action("FollowedFood","Account")" class="card__linklist-item link text--strong">Thực phẩm đã theo dõi</a>
+                                <a href="@Url.Action("DangCongThuc","Account")" class="card__linklist-item link">Đăng công thức nấu ăn</a>
+                                <a href="@Url.Action("KhoBep","Account")" class="card__linklist-item link">Kho bếp của tôi</a>
+                                <a href="#" class="card__linklist-item link" data-no-instant="" onclick="logOutTK()">Đăng xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--layout tác vụ -->
+                <div class="layout__section">
+                  <div class="card">
+                    <div class="card__section card__section--tight">
+                      <h1 class="heading h1"> Các thực phẩm đã theo dõi </h1>
+                    </div>
+                    <div class="table-wrapper">
+                      <table class="line-item-table table table--loose">
+                        <thead class="hidden-phone" style="">
+                       <tr>
+                        <th >
+                          Id theo dõi
+                        </th>
+                        <th class="table__cell--center">
+                          Tên thực phẩm
+                        </th>
+                        <th class="table__cell--center">
+                          Số lượng trên một sản phẩm/Đơn vị tính
+                        </th>
+                        <th class="table__cell--center">
+                          Tình trạng
+                        </th>
+                        <th class="table__cell--right" >
+                          Thao tác
+                        </th>                    
+                        </tr>
+                      </thead>
+                        <tbody>
+                          @foreach (var item in Model)
+                          {
+                        <tr>
+                          <td>
+                            @Html.DisplayFor(modelItem => item.IdTheoDoi)
+                          </td>
+                          <td class="line-item__line-price table__cell--center hidden-phone">
+                            <a href="@Url.Action("Index","Food", new { id = item.IdFood })">
+                              @Html.DisplayFor(modelItem => item.IdFoodNavigation.NameFood)
+                            </a>
+                          </td>
+                          <td class="line-item__line-price table__cell--center hidden-phone">
+                            @Html.DisplayFor(modelItem => item.IdFoodNavigation.SoLuong) @Html.DisplayFor(modelItem => item.IdFoodNavigation.DonViTinh)
+                          </td>
+                          <td class="line-item__line-price table__cell--center hidden-phone">
+                            @Html.DisplayFor(modelItem => item.IdFoodNavigation.Status)
+                          </td>
+                          <td class="line-item__line-price table__cell--right hidden-phone">
+                            <a asp-action="DeleteFollowedFood" asp-route-id="@item.IdTheoDoi">Bỏ theo dõi</a>
+                          </td>
+                        </tr>
+}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

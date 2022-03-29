@@ -1,0 +1,84 @@
+@model IEnumerable<HomeCooking.Models.ChiTietHoaDonKhachHang>
+@{
+    ViewData["Title"] = "Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main id="main" role="main">
+    <section data-section-id="account" data-section-type="account">
+        <div class="container container--flush">
+            <div class="layout">
+                <!--list tác vụ-->
+                <div class="layout__section layout__section--secondary">
+                    <div class="card card--sticky hidden-pocket">
+                        <div class="card__section card__section--tight">
+
+                          <div class="card__linklist">
+                            <a href="@Url.Action("Index","Account")" class="card__linklist-item link ">Thông tin cá nhân</a>
+                            <a href="@Url.Action("Invoice","Account")" class="card__linklist-item link text--strong">Đơn hàng của tôi </a>
+                            <a href="@Url.Action("FollowedFood","Account")" class="card__linklist-item link">Thực phẩm đã theo dõi</a>
+                            <a href="@Url.Action("DangCongThuc","Account")" class="card__linklist-item link">Đăng công thức nấu ăn</a>
+                            <a href="@Url.Action("KhoBep","Account")" class="card__linklist-item link">Kho bếp của tôi</a>
+                            <a href="#" class="card__linklist-item link" data-no-instant="" onclick="logOutTK()">Đăng xuất</a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <!--layout tác vụ -->
+                <div class="layout__section">
+                    <div class="card">
+                        <div class="card__section card__section--tight">
+                            <h1 class="heading h1"> Các đơn hàng  </h1>
+                        </div>
+                        <div class="card__section">
+                          <table class="line-item-table table table--loose">
+                            <thead class="hidden-phone" style="">
+                              <tr>
+                                  <th >
+                                    Tên thực phẩm
+                                  </th>
+                                  <th class="table__cell--center">
+                                    Thuộc lô hàng
+                                  </th class="table__cell--center"> 
+                                  <th class="table__cell--center">
+                                    Số lượng
+                                  </th>
+                                  <th  class="table__cell--right">
+                                    Giá trị
+                                  </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              @foreach (var item in Model)
+                              {
+                            <tr>
+
+                              <td>
+                                <a href="@Url.Action("Index","Food", new { id=item.IdLoHangNavigation.IdFood })">
+                                  @Html.DisplayFor(modelItem => item.IdLoHangNavigation.IdFoodNavigation.NameFood)
+
+                                </a>
+
+                              </td>
+                              <td class="line-item__line-price table__cell--center hidden-phone">
+                                @Html.DisplayFor(modelItem => item.IdLoHangNavigation.IdLoHang)
+                              </td>
+                              <td class="line-item__line-price table__cell--center hidden-phone">
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                              </td>
+                              <td class="line-item__line-price table__cell--right hidden-phone">
+                                @Html.DisplayFor(modelItem => item.GiaTien)đ
+                              </td>
+
+                            </tr>
+}
+                            </tbody>
+                          </table>
+                          <a class="fa fa-angle-double-left product-form__add-button button button--primary" href="@Url.Action("Invoice","Account")">Trở về</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+

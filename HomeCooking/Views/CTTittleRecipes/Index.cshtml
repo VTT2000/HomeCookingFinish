@@ -1,0 +1,120 @@
+﻿@model IEnumerable<HomeCooking.Models.ChiTietChuDeCongThuc>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/admin/_AdminLayout.cshtml";
+    List<CongThucNauAn> list0 = ViewBag.CongThucNauAns as List<CongThucNauAn>;
+    
+}
+
+
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Title</h3>
+                        <!-- Navbar -->
+                        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                            <!-- Left navbar links -->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                                </li>
+
+                            </ul>
+
+                            <!-- Right navbar links -->
+                            <ul class="navbar-nav ml-auto">
+                                <!-- Navbar Search -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+                                    <div class="navbar-search-block">
+                                        <form class="form-inline">
+                                            <div class="input-group input-group-sm">
+                                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-navbar" type="submit">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        </nav>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin-left: 320px;">
+                        <h4>Quản lý chọn chủ đề cho công thức nấu ăn</h4>
+                        
+                        <table class="table" border="1">
+                            <tr style="background-color:gray">
+                                <th>
+                                    Id công thức nấu ăn
+                                </th>
+                                <th>
+                                    Tên công thức nấu ăn
+                                </th>
+                                <th>
+                                    Các chủ đề thuộc công thức nấu ăn
+                                </th>
+                                <th>
+                                    Thao tác
+                                </th>
+                            </tr>
+                            @foreach (CongThucNauAn i in list0)
+                            {
+                                <tr>
+                                    <td>
+                                        @i.IdCongThuc
+                                    </td>
+                                    <td>
+                                        @i.TenCongThuc
+                                    </td>
+                                    <td>
+                                        @foreach (var item in Model)
+                                        {
+                                            @if (i.IdCongThuc == item.IdCongThuc)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.IdChuDeNavigation.TenChuDe)
+                                                <br/>
+                                            }
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id=i.IdCongThuc }) 
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>

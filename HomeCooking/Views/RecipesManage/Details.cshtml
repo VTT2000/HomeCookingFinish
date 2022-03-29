@@ -1,0 +1,135 @@
+﻿@model HomeCooking.Models.CongThucNauAn
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/admin/_AdminLayout.cshtml";
+}
+
+
+<section class="content">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Default box -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Title</h3>
+                        <!-- Navbar -->
+                        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+                            <!-- Left navbar links -->
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                                </li>
+
+                            </ul>
+
+                            <!-- Right navbar links -->
+                            <ul class="navbar-nav ml-auto">
+                                <!-- Navbar Search -->
+                                <li class="nav-item">
+                                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+                                    <div class="navbar-search-block">
+                                        <form class="form-inline">
+                                            <div class="input-group input-group-sm">
+                                                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-navbar" type="submit">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                                        <i class="fas fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+
+
+
+                            </ul>
+                        </nav>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body" style="margin-left: 320px;">
+                        <h1>Details</h1>
+
+                        <div>
+                            <h4>CongThucNauAn</h4>
+                            <hr />
+                            <dl class="row">
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.TenCongThuc)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.TenCongThuc)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.TacGia)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.TacGia)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.MoTaMonAn)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.MoTaMonAn)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.NgayTao)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.NgayTao)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    Hình ảnh
+                                </dt>
+                                <dd class="col-sm-10">
+                                    <img src="@Model.LinkHinhAnh" style="width:250px;height:250px" />
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.LinkHinhAnh)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.LinkHinhAnh)
+                                </dd>
+                                <dt class="col-sm-2">
+                                    Video
+                                </dt>
+                                <dd class="col-sm-10">
+                                    <iframe width="560" height="315" src="@Model.LinkVideo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                </dd>
+                                <dt class="col-sm-2">
+                                    @Html.DisplayNameFor(model => model.LinkVideo)
+                                </dt>
+                                <dd class="col-sm-10">
+                                    @Html.DisplayFor(model => model.LinkVideo)
+                                </dd>
+                            </dl>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.IdCongThuc">Edit</a> |
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                    </div>
+
+                    <!-- /.card-footer-->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>

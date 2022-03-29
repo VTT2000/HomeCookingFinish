@@ -1,0 +1,19 @@
+@model IEnumerable<HomeCooking.Models.LoaiThucPham>
+
+
+
+
+<li class="nav-bar__item dropdown">
+    <a href="#" class="nav-bar__link link" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        LOẠI SẢN PHẨM
+        <svg focusable="false" class="icon icon--arrow-bottom" viewBox="0 0 12 8" role="presentation">
+            <path stroke="currentColor" stroke-width="2" d="M10 2L6 6 2 2" fill="none" stroke-linecap="square"></path>
+        </svg>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        @foreach (LoaiThucPham item in Model.ToList())
+        {
+<li><a class="dropdown-item" href="@Url.Action("FoodTheoLoai","ListFood", new { id = item.IdLoai })">@item.TenLoai</a></li>
+}
+    </ul>
+</li>
